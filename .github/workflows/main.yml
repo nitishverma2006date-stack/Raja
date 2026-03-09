@@ -1,0 +1,31 @@
+name: Run RAJ Telegram Bot
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "*/30 * * * *"
+
+jobs:
+  run_bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make attack binary executable
+        run: chmod +x raja
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install required dependencies
+        run: |
+          pip install python-telegram-bot==20.7
+
+      - name: Run RAJ Bot
+        run: python3 raj.py
